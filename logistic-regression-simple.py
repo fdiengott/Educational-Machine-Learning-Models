@@ -19,6 +19,26 @@ def compute_cost(x, y, w, b):
     cost /= m
     return cost
 
+
+def getRegularizedCost(x,y,w,b,lambda_=1):
+    m,n = x.shape
+    cost = 0.
+
+    for i in range(m):
+        z = np.dot(x[i], w) + b
+        cost += -y[i] * np.log(sigmoid(z)) - (1 - y[i]) * np.log(1 - sigmoid(z))
+
+    cost /= m
+
+    regularizedCost = 0.
+    for j in range(n):
+        regularizedCost += w[j]**2
+
+    regularizedCost *= (lambda_ * (2 * m))
+
+    return cost + regularizedCost
+
+
 def normalize(x):
     mu = np.mean(x, axis=0)
     sigma = np.std(x, axis=0)
