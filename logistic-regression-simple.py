@@ -25,10 +25,14 @@ def getRegularizedCost(x,y,w,b,lambda_=1):
     cost = 0.
 
     for i in range(m):
-        z = np.dot(x[i], w) + b
-        cost += -y[i] * np.log(sigmoid(z)) - (1 - y[i]) * np.log(1 - sigmoid(z))
+        z_i = np.dot(x[i], w) + b
+        f_wb = sigmoid(z_i)
+        cost -= y[i] * np.log(f_wb) - (1 - y[i]) * np.log(1 - f_wb)
 
     cost /= m
+
+    # the above can just be:
+    # cost = compute_cost(x,y,w,b)
 
     regularizedCost = 0.
     for j in range(n):
@@ -63,6 +67,16 @@ def compute_gradient(x, y, w, b):
 
     return derivative_w, derivative_b
 
+# this just replaces compute_gradient in gradient descent
+def compute_gradient_regularized(x,y,w,b,lambda_ = 1):
+    m,n = x.shape
+
+    derivative_w, derivative_b = compute_gradient(x,y,w,b)
+
+    for j in range(n):
+        derivative_w += (lambda_ / m * w[j])
+
+    return derivative_w, derivative_b
 
 
 def gradient_descent(x,y,w_init,b_init,alpha,num_iterations):
