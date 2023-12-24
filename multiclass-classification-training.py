@@ -1,11 +1,16 @@
-# The goal of this file is to be able to train a model for multiclass classification. The archetypal example is fitting a model to the MNIST dataset, which includes images of handwritten numbers, so that it can properly classify each digit. I will assume each image is 20x20 pixels. I have not attempted to optimize for the correct number of layers or units (neurons), but am using this as an educational opportunity.
+"""
+The goal of this file is to be able to train a model for multiclass classification. The archetypal example is fitting
+a model to the MNIST dataset, which includes images of handwritten numbers, so that it can properly classify each digit.
+I will assume each image is 20x20 pixels. I have not attempted to optimize for the correct number of layers or units
+(neurons), but am using this as an educational opportunity.
+"""
 
 import tensorflow as tf
 from tf.keras import Sequential
 from tf.keras.layers import Dense
 from tf.keras.losses import SparseCategoricalCrossentropy
 
-X,y = load_data()
+X,y = load_data() # not yet implemented
 
 model = Sequential([
     Dense(units=25, activation='relu'),
@@ -20,7 +25,7 @@ logits = model(X)
 f_x = tf.nn.softmax(logits)
 
 # to predict test data
-X_test = load_test_data()
+X_test = load_test_data() # not yet implemented
 model.predict(X_test)
 
 
