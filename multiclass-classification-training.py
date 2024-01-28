@@ -5,12 +5,13 @@ I will assume each image is 20x20 pixels. I have not attempted to optimize for t
 (neurons), but am using this as an educational opportunity.
 """
 
+import numpy as np
 import tensorflow as tf
 from tf.keras import Sequential
 from tf.keras.layers import Dense
 from tf.keras.losses import SparseCategoricalCrossentropy
 
-X,y = load_data() # not yet implemented
+X_train, y_train, X_test, y_test = load_data() # not yet implemented
 
 model = Sequential([
     Dense(units=25, activation='relu'),
@@ -25,9 +26,9 @@ logits = model(X)
 f_x = tf.nn.softmax(logits)
 
 # to predict test data
-X_test = load_test_data() # not yet implemented
-model.predict(X_test)
+prediction_probabilities = model.predict(X_test)
 
+digit_predictions = np.argmax(prediction_probabilities)
 
 # the less accurate way:
 """
@@ -42,3 +43,6 @@ model.fit(X,y,epochs=100)
 
 model.predict(X_test)
 """
+
+# Now, if we wanted to run diagnostics to see if we should have a different architecture, we should also have a separate dev set set aside. I'd use that instead of the test data set above to run predictions.
+# Then I'd use the final test data to show benchmark results
